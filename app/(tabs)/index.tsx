@@ -1,98 +1,133 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { TextInput, Image } from 'react-native'
+import { TouchableOpacity } from 'react-native'
+import { FlatList } from 'react-native'
+import { Link } from 'expo-router'
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase"; 
+import { onSnapshot } from 'firebase/firestore'
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
 
-export default function HomeScreen() {
+export default function index() {
+const [selected, setSelected] = useState("lost");
+  const [items, setItems] = useState<any[]>([]);  
+  const [loading, setLoading] = useState(true);
+ 
+useEffect(() => {
+  const unsubscribe = onSnapshot(collection(db, "items"), (snapshot) => {
+    const itemsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    setItems(itemsData);
+    setLoading(false);
+  }, (error) => {
+    console.error("Error fetching items: ", error);
+    setLoading(false);
+  });
+
+  return () => unsubscribe();
+}, []);
+
+
+
+const filteredData = items.filter(item => item.type === selected);
+
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+        <>
+          <View className='flex-1 bg-white'>
+     <View className='flex-1 items-center gap-5 bg-white'>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+      <View className='flex flex-row mt-16 gap-5'>
+       <TextInput 
+       placeholder='   search item..'
+       className='h-16 w-72 border border-gray-300 p-4 rounded-full'>
+       </TextInput>
+       
+      <View className='h-16 w-16 bg-blue-400 rounded-full'>
+      </View> 
+        </View>
+
+        <View className='h-40 w-96 bg-blue-400 rounded-3xl flex flex-row items-center gap-2 '>
+         <Image source={require("../lost.png")} className="h-36 w-48" resizeMode="contain" />
+
+          <Text className='font-semibold text-xl text-center text-black'>
+            Find what's{"\n"}missing,{"\n"}return{"\n"}what's found!
+          </Text>
+        </View>
+         <View className='h-16 w-96 bg-gray-300 rounded-4xl  flex flex-row items-center justify-evenly '>
+  
+         <TouchableOpacity onPress={() => setSelected("lost")}>
+      {selected === "lost" ? (
+        <View className="bg-blue-400 h-12 w-44 rounded-3xl flex items-center justify-center">
+      <Text className="font-semibold text-white">Lost Items</Text>
+       </View>
+          ) : (
+       <View className="bg-gray-300 h-12 w-44 rounded-3xl flex items-center justify-center">
+        <Text className="font-semibold text-black">Lost Items</Text>
+      </View>
+      )}
+       </TouchableOpacity>
+
+         <TouchableOpacity onPress={() => setSelected("found")}>
+      {selected === "found" ? (
+       <View className='bg-blue-400 h-12 w-44 rounded-3xl flex items-center justify-center'>
+          <Text className="font-semibold text-white">Found Items</Text>
+         </View>
+          ) : (
+       <View className="bg-gray-300 h-12 w-44 rounded-3xl flex items-center justify-center">
+        <Text className="font-semibold text-black">Found Items</Text>
+      </View>
+      )}
+       </TouchableOpacity>
+         </View>
+
+
+
+       <FlatList
+       style={{ marginBottom: 120 }}
+       data={filteredData}
+        showsVerticalScrollIndicator={false}
+       renderItem={({ item }) => (
+
+   <Link href={`/items/${item.id}`} asChild>
+    <TouchableOpacity>
+         <View className='border border-gray-300 h-32 w-96 rounded-3xl flex flex-row'>
+          <View>
+           <Image source={{ uri: item.image }} className="h-24 w-24 rounded-2xl mt-4 ml-4 border border-gray-300" />
+            </View>
+
+            <View className='flex flex-col gap-2'>
+              <View className='flex flex-row items-center justify-between'>
+            <Text className='font-bold text-lg mt-4 ml-4'>{item.name}</Text>
+             <View className="bg-blue-400 h-6 mt-4 w-20 rounded-xl items-center justify-center ">
+         <Text className="font-bold text-white  text-sm">{item.type}</Text>
+               </View>
+
+
+            </View>
+            <View className='h-10 w-64'>
+            <Text className='font-semibold text-gray-600 ml-4'>{item.description}</Text>
+            </View>
+             <View className='flex flex-row gap-1 '>
+            <Text className='text-xs text-gray-600 ml-4'>Place: {item.location}</Text>
+             </View>
+            </View>
+         </View>
+
+
+    </TouchableOpacity>
+</Link>
+
+       )}
+       keyExtractor={(item) => item.id}
+        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+     />
+     
+
+
+
+     </View>
+     </View>
+    </>
+  )
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
