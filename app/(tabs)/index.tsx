@@ -31,7 +31,10 @@ useEffect(() => {
 
 
 const filteredData = items.filter(item => item.type === selected);
-
+var flag=0;
+if(filteredData.length===0 && !loading){
+   flag=1;
+}
 
   return (
         <>
@@ -81,6 +84,8 @@ const filteredData = items.filter(item => item.type === selected);
       )}
        </TouchableOpacity>
          </View>
+
+           {flag===1 && <Text className='mt-10 text-xl font-semibold text-gray-500'>No items found!!</Text>}
 
        <FlatList
        style={{ marginBottom: 120 }}

@@ -79,7 +79,6 @@ useEffect(() => {
       >
         <View className="flex-1 bg-white gap-6 items-center">
           
-      
           <View className="h-96 w-96  border-gray-300 mt-16 rounded-3xl">
             <Image source={{ uri: item?.image }} className="h-full w-96 rounded-3xl" resizeMode="cover" />
           </View>

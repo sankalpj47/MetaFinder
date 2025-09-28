@@ -8,6 +8,7 @@ import { db, authi } from "../../firebase";
 import { FlatList } from 'react-native'
 import { Image } from 'react-native'
 import { Link } from 'expo-router'
+import { Menu, MenuOptions, MenuOption, MenuTrigger, MenuProvider } from "react-native-popup-menu";
 
 const profile = () => {
   const user=authi.currentUser;
@@ -49,14 +50,31 @@ useEffect(() => {
 
 const filteredData = items.filter(item => item.type === selected);
 
+  var flag=0;
+   if(filteredData.length===0){
+   flag=1;
+   }
+
   return (
+    <MenuProvider>
     <View className='flex-1 bg-white '>
       <View className='flex-1 gap-4 items-center'>
     
       <View className='flex items-center w-full'>
-     <View className='w-full h-44 bg-blue-400 gap-2  flex items-center'>
+     <View className='w-full h-44 bg-blue-400 gap-2  flex items-center'>      
       <Text className='font-semibold text-3xl text-white mt-16'>{user?.displayName}</Text>
       <Text className='font-semibold text-xl text-gray-600 '>{phone}</Text>
+      <Menu>
+    <MenuTrigger>
+      {/* <View><Text>Menu</Text></View> */}
+    </MenuTrigger>
+
+    <MenuOptions>
+      <MenuOption onSelect={() => authi.signOut()} text='Logout' />
+    </MenuOptions>
+
+  </Menu>
+
      </View>
      </View>
     
@@ -65,7 +83,7 @@ const filteredData = items.filter(item => item.type === selected);
      </View>
 
             <View className='h-16 w-96 bg-gray-300 rounded-4xl  flex flex-row items-center justify-evenly '>
-     
+          
             <TouchableOpacity onPress={() => setSelected("lost")}>
          {selected === "lost" ? (
            <View className="bg-blue-400 h-12 w-44 rounded-3xl flex items-center justify-center">
@@ -90,7 +108,7 @@ const filteredData = items.filter(item => item.type === selected);
          )}
           </TouchableOpacity>
             </View>
-          
+                  {flag===1 && <Text className='mt-10 text-xl font-semibold text-gray-500'>No items found!!</Text>}
                  <FlatList
                  style={{ marginBottom: 120 }}
                  data={filteredData}
@@ -99,12 +117,12 @@ const filteredData = items.filter(item => item.type === selected);
           
              <Link href={`/items/${item.id}`} asChild>
               <TouchableOpacity>
-                   <View className='border border-gray-300 h-32 w-96 rounded-2xl flex flex-row'>
+                   <View className='border border-gray-300 h-32 w-96 rounded-3xl flex flex-row'>
                     <View>
                      <Image source={{ uri: item.image }} className="h-24 w-24 rounded-2xl mt-4 ml-4 border border-gray-300" />
                       </View>
           
-                      <View className='flex flex-col gap-2'>
+                      <View className='flex flex-col gap-2 -mt-1'>
                         <View className='flex flex-row items-center justify-between'>
                       <Text className='font-bold text-lg mt-4 ml-4'>{item.name}</Text>
                        <View className="bg-blue-400 h-6 mt-4 w-20 rounded-xl items-center justify-center ">
@@ -132,6 +150,7 @@ const filteredData = items.filter(item => item.type === selected);
      
      </View>
     </View>
+    </MenuProvider>
   )
 }
 
