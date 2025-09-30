@@ -9,6 +9,19 @@ import { FlatList } from 'react-native'
 import { Image } from 'react-native'
 import { Link } from 'expo-router'
 import { Menu, MenuOptions, MenuOption, MenuTrigger, MenuProvider } from "react-native-popup-menu";
+import { signOut } from 'firebase/auth'
+import { updateProfile } from 'firebase/auth'
+import { router } from 'expo-router'
+
+   const logout=async()=>{
+    try {
+      await signOut(authi);
+      router.replace("/AuthScreen")
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    } 
+    }
+
 
 const profile = () => {
   const user=authi.currentUser;
@@ -46,8 +59,6 @@ useEffect(() => {
   fetchUser();
 }, []);
 
-
-
 const filteredData = items.filter(item => item.type === selected);
 
   var flag=0;
@@ -58,28 +69,41 @@ const filteredData = items.filter(item => item.type === selected);
   return (
     <MenuProvider>
     <View className='flex-1 bg-white '>
-      <View className='flex-1 gap-4 items-center'>
+      <View className='flex-1 gap-4 items-center justify-center'>
     
       <View className='flex items-center w-full'>
      <View className='w-full h-44 bg-blue-400 gap-2  flex items-center'>      
-      <Text className='font-semibold text-3xl text-white mt-16'>{user?.displayName}</Text>
-      <Text className='font-semibold text-xl text-gray-600 '>{phone}</Text>
-      <Menu>
-    <MenuTrigger>
-      {/* <View><Text>Menu</Text></View> */}
+      <View className='flex mt-16 flex-row gap-20'>
+  
+   <Menu>
+  
+  <MenuTrigger>
+      <View className='bg-white h-10 w-10 rounded-full'>
+        <Image source={require('../logout.jpg')} className="h-11 w-11 rounded-full" />
+      </View>
+
     </MenuTrigger>
 
-    <MenuOptions>
-      <MenuOption onSelect={() => authi.signOut()} text='Logout' />
+    <MenuOptions optionsContainerStyle={{height:52,width:88}}>
+         <MenuOption onSelect={logout}>
+      <Text style={{fontSize:20,padding:5}}>Logout</Text>
+      </MenuOption>
     </MenuOptions>
 
   </Menu>
 
+      <Text className='font-semibold text-3xl text-white'>{user?.displayName}</Text>
+      <View className='bg-blue-400 h-10 w-10 flex justify-center items-center rounded-full'>
+        
+      </View>
+      </View>
+      <Text className='font-semibold text-xl text-gray-700 '>{phone}</Text>
+   
      </View>
      </View>
     
      <View >
-      <Text className='font-semibold text-2xl text-gray-600'>My Activity</Text>
+      <Text className='font-semibold text-2xl text-gray-800'>My Activity</Text>
      </View>
 
             <View className='h-16 w-96 bg-gray-300 rounded-4xl  flex flex-row items-center justify-evenly '>
