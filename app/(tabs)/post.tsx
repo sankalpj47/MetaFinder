@@ -106,17 +106,17 @@ const Post = () => {
             <View className='flex items-start w-96'>
           <Text className="font-semibold text-lg ml-6">Item Name</Text>
             </View>   
-          <TextInput value={name} onChangeText={setName} placeholder="Enter the item name" className="h-16 w-96 border-2 border-gray-300 p-4 rounded-4xl " />
+          <TextInput value={name} placeholderTextColor={"#555555"} onChangeText={setName} placeholder="Enter the item name" className="h-16 w-96 border-2  border-gray-300 p-4 rounded-4xl " />
 
            <View className='flex items-start w-96'>
           <Text className="font-semibold text-lg ml-6 mt-4">Description</Text>
            </View>
-          <TextInput value={description} onChangeText={setDescription} placeholder="Enter the detailed description" className="h-24 w-96 border-2 border-gray-300 p-4 rounded-4xl " multiline />
+          <TextInput value={description} placeholderTextColor={"#555555"} onChangeText={setDescription} placeholder="Enter the detailed description" className="h-24 w-96 border-2  border-gray-300 p-4 rounded-4xl " multiline />
        
           <View className='flex items-start w-96'>
           <Text className="font-semibold text-lg ml-6 mt-4">{selected === "found" ? "Location Found" : "Location Lost"}</Text>
           </View>
-          <TextInput value={location} onChangeText={setLocation} placeholder="e.g., In the library" className="h-16 w-96 border-2 border-gray-300 p-4 rounded-4xl " />
+          <TextInput value={location} placeholderTextColor={"#555555"} onChangeText={setLocation} placeholder="e.g., In the library" className="h-16 w-96 border-2 border-gray-300 p-4 rounded-4xl " />
 
           <View className='flex items-start w-96'>
           <Text className="font-semibold text-lg  ml-6 mt-4">Add Image</Text>

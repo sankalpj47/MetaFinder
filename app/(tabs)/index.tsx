@@ -8,7 +8,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase"; 
 import { onSnapshot } from 'firebase/firestore'
 
-
 export default function index() {
   
 const [selected, setSelected] = useState("lost");
@@ -28,8 +27,6 @@ useEffect(() => {
   return () => unsubscribe();
 }, []);
 
-
-
 const filteredData = items.filter(item => item.type === selected);
 var flag=0;
 if(filteredData.length===0 && !loading){
@@ -40,25 +37,27 @@ if(filteredData.length===0 && !loading){
         <>
           <View className='flex-1 bg-white'>
      <View className='flex-1 items-center gap-5 bg-white'>
+      <View className='h-44 w-full rounded-4xl items-center bg-blue-400'>
 
-      {/* <View className='flex flex-row mt-16 gap-5'>
+      <View className='flex  flex-row mt-16 gap-5'>
+   
        <TextInput 
        placeholder='   search item..'
-       className='h-16 w-72 border border-gray-300 p-4 rounded-full'>
+       className='h-16 w-96 border bg-white border-[#E4E4E4] p-4 rounded-full'>
        </TextInput>
-       
-      <View className='h-16 w-16 bg-blue-400 rounded-full'>
-      </View> 
-        </View> */}
+      
+        </View>
+     </View>
 
-        <View className='h-40 w-96 bg-blue-400 mt-16 rounded-3xl flex flex-row items-center gap-2 '>
+
+        <View className='h-40 w-96 bg-blue-400 rounded-3xl flex flex-row items-center gap-2 '>
          <Image source={require("../lost.png")} className="h-36 w-48" resizeMode="contain" />
 
           <Text className='font-semibold text-xl text-center text-gray-700'>
             Find what's{"\n"}missing,{"\n"}return{"\n"}what's found!
           </Text>
         </View>
-         <View className='h-16 w-96 bg-gray-300 rounded-4xl  flex flex-row items-center justify-evenly '>
+         <View className='h-16 w-96 bg-[#E4E4E4] rounded-4xl  flex flex-row items-center justify-evenly '>
   
          <TouchableOpacity onPress={() => setSelected("lost")}>
       {selected === "lost" ? (
@@ -66,7 +65,7 @@ if(filteredData.length===0 && !loading){
       <Text className="font-semibold text-white">Lost Items</Text>
        </View>
           ) : (
-       <View className="bg-gray-300 h-12 w-44 rounded-3xl flex items-center justify-center">
+       <View className="bg-[#E4E4E4] h-12 w-44 rounded-3xl flex items-center justify-center">
         <Text className="font-semibold text-black">Lost Items</Text>
       </View>
       )}
@@ -78,7 +77,7 @@ if(filteredData.length===0 && !loading){
           <Text className="font-semibold text-white">Found Items</Text>
          </View>
           ) : (
-       <View className="bg-gray-300 h-12 w-44 rounded-3xl flex items-center justify-center">
+       <View className="bg-[#E4E4E4] h-12 w-44 rounded-3xl flex items-center justify-center">
         <Text className="font-semibold text-black">Found Items</Text>
       </View>
       )}
@@ -95,9 +94,9 @@ if(filteredData.length===0 && !loading){
 
    <Link href={`/items/${item.id}`} asChild>
     <TouchableOpacity>
-         <View className='border border-gray-300 h-32 w-96 rounded-3xl align-middle flex flex-row'>
+         <View className=' bg-[#E4E4E4] h-32 w-96 rounded-3xl align-middle flex flex-row'>
           <View>
-           <Image source={{ uri: item.image }} className="h-24 w-24 rounded-2xl mt-4 ml-4 border border-gray-300" />
+           <Image source={{ uri: item.image }} className="h-24 w-24 rounded-2xl mt-4 ml-4  " />
             </View>
 
             <View className='flex flex-col gap-2 -mt-1'>
@@ -111,8 +110,9 @@ if(filteredData.length===0 && !loading){
             <View className='h-10 w-64'>
             <Text className='font-semibold text-gray-600 ml-4'>{item.description}</Text>
             </View>
-             <View className='flex flex-row gap-1 '>
-            <Text className='text-xs text-gray-600 ml-4'>Place: {item.location}</Text>
+             <View className='flex flex-row gap-1 items-center'>
+              <Image source={require("../location.png")} className="h-3 w-3 ml-4" />
+            <Text className='text-xs text-gray-600'>Place: {item.location}</Text>
              </View>
             </View>
          </View>

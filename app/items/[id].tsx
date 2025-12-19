@@ -13,6 +13,9 @@ const ItemDetails = () => {
   const [name, setName] = useState("")
   const [phone, setPhone] = useState("")
 
+const back=()=>{
+router.back();
+}
 
 const handleDelete=async()=>{
   if (!id) return
@@ -77,9 +80,19 @@ useEffect(() => {
         contentContainerStyle={{ paddingBottom: 60, flexGrow: 1 }}
         showsVerticalScrollIndicator={false}
       >
+        <View className='flex flex-row items-center justify-evenly align-middle '>
+          <TouchableOpacity onPress={back}>
+        <View className='h-12 mt-14 w-12 bg-blue-400 rounded-full'>
+
+          <Image source={require("../../app/back.png")} className="h-6 w-6 m-3" resizeMode="contain" />
+        </View>
+          </TouchableOpacity>
+         <Text className='mt-14 text-3xl'>Item Details</Text>
+        <View className='h-10 mt-14 w-10 bg-white'></View>
+        </View>
         <View className="flex-1 bg-white gap-6 items-center">
           
-          <View className="h-96 w-96  border-gray-300 mt-16 rounded-3xl">
+          <View className="h-96 w-96  border-gray-300 mt-8 rounded-3xl">
             <Image source={{ uri: item?.image }} className="h-full w-96 rounded-3xl" resizeMode="cover" />
           </View>
 

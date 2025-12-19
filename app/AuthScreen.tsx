@@ -51,7 +51,8 @@ const AuthScreen = () => {
         placeholder="Enter email"
         value={email}
         onChangeText={setEmail}
-        className="border border-gray-400 p-4 w-96 h-14 rounded-xl"
+        placeholderTextColor={"#555555"}
+        className="border  border-gray-400 p-4 w-96 h-14 rounded-xl"
         keyboardType="email-address"
         autoCapitalize="none"
       />
@@ -60,6 +61,7 @@ const AuthScreen = () => {
         placeholder="Enter password"
         value={password}
         onChangeText={setPassword}
+        placeholderTextColor={"#555555"}
         className="border border-gray-400 p-4 w-96 h-14 rounded-xl"
         secureTextEntry
       />
@@ -80,14 +82,14 @@ const AuthScreen = () => {
         value={phone}
         onChangeText={setPhone}
         className="border border-gray-400 p-4 w-96 h-14 rounded-xl"
-        secureTextEntry
+        // secureTextEntry
       />
       <TextInput
         placeholder="Enter Email"
         value={email}
         onChangeText={setEmail}
         className="border border-gray-400 p-4 w-96 h-14 rounded-xl"
-        secureTextEntry
+        // secureTextEntry
       />
       <TextInput
         placeholder="Enter password"

@@ -13,6 +13,7 @@ import { signOut } from 'firebase/auth'
 import { updateProfile } from 'firebase/auth'
 import { router } from 'expo-router'
 
+
    const logout=async()=>{
     try {
       await signOut(authi);
@@ -72,7 +73,7 @@ const filteredData = items.filter(item => item.type === selected);
       <View className='flex-1 gap-4 items-center justify-center'>
     
       <View className='flex items-center w-full'>
-     <View className='w-full h-44 bg-blue-400 gap-2  flex items-center'>      
+     <View className='w-full h-44 bg-blue-400 gap-2 rounded-4xl flex items-center'>      
       <View className='flex mt-16 flex-row gap-20'>
   
    <Menu>
@@ -106,7 +107,7 @@ const filteredData = items.filter(item => item.type === selected);
       <Text className='font-semibold text-2xl text-gray-800'>My Activity</Text>
      </View>
 
-            <View className='h-16 w-96 bg-gray-300 rounded-4xl  flex flex-row items-center justify-evenly '>
+            <View className='h-16 w-96 bg-[#E4E4E4] rounded-4xl  flex flex-row items-center justify-evenly '>
           
             <TouchableOpacity onPress={() => setSelected("lost")}>
          {selected === "lost" ? (
@@ -114,7 +115,7 @@ const filteredData = items.filter(item => item.type === selected);
          <Text className="font-semibold text-white">Lost Items</Text>
           </View>
              ) : (
-          <View className="bg-gray-300 h-12 w-44 rounded-3xl flex items-center justify-center">
+          <View className="bg-[#E4E4E4] h-12 w-44 rounded-3xl flex items-center justify-center">
            <Text className="font-semibold text-black">Lost Items</Text>
          </View>
          )}
@@ -126,13 +127,22 @@ const filteredData = items.filter(item => item.type === selected);
              <Text className="font-semibold text-white">Found Items</Text>
             </View>
              ) : (
-          <View className="bg-gray-300 h-12 w-44 rounded-3xl flex items-center justify-center">
+          <View className="bg-[#E4E4E4] h-12 w-44 rounded-3xl flex items-center justify-center">
            <Text className="font-semibold text-black">Found Items</Text>
          </View>
          )}
           </TouchableOpacity>
             </View>
-                  {flag===1 && <Text className='mt-10 text-xl font-semibold text-gray-500'>No items found!!</Text>}
+
+           {flag===1 && 
+             <View className='flex items-center'>
+
+                <Image source={require("../nothing.png")} className="h-80 w-96" resizeMode="contain" />
+               
+                 <Text className='mt-10 text-xl font-semibold text-gray-500'>No items found!!</Text>
+             </View>
+           }
+             
                  <FlatList
                  style={{ marginBottom: 120 }}
                  data={filteredData}
@@ -152,7 +162,7 @@ const filteredData = items.filter(item => item.type === selected);
                        <View className="bg-blue-400 h-6 mt-4 w-20 rounded-xl items-center justify-center ">
                    <Text className="font-bold text-white  text-sm">{item.type}</Text>
                          </View>
-          
+
                       </View>
                       <View className='h-10 w-64'>
                       <Text className='font-semibold text-gray-600 ml-4'>{item.description}</Text>
