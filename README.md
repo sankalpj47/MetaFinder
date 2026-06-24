@@ -13,9 +13,9 @@ Built with **React Native (Expo)** and **Firebase**.
 
 ## Screenshots
 
-| Home Feed | Item Details | Post Item |
-|---|---|---|
-| ![Home](./assets/screenshots/home.png) | ![Details](./assets/screenshots/details.png) | ![Post](./assets/screenshots/post.png) |
+| Home Feed | Item Details | Post Item | Profile |
+|---|---|---|---|
+| ![Home](./assets/screenshots/home.jpeg) | ![Details](./assets/screenshots/details.jpeg) | ![Post](./assets/screenshots/post.jpeg) | ![Profile](./assets/screenshots/profile.jpeg) |
 
 ---
 
