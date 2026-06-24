@@ -12,7 +12,7 @@ const icons: Record<string, number> ={
 export function PlusIcon() {
   return (
        <TouchableOpacity
-      onPress={() => router.push("/post")} // ✅ navigation
+      onPress={() => router.push("/post")} 
       activeOpacity={0.8}
       style={{
         bottom: 16,
