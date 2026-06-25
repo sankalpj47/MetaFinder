@@ -2,42 +2,40 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import {getAuth} from "firebase/auth"
+import { getAuth } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAijFh_QNSmaoHvQAIi_Cef_hT8XycevX0",
-  authDomain: "metafinder-3cb93.firebaseapp.com",
-  projectId: "metafinder-3cb93",
-  storageBucket: "metafinder-3cb93.firebasestorage.app",
-  messagingSenderId: "721468487477",
-  appId: "1:721468487477:web:ec7920c6ea62a1ee847e7c",
-  measurementId: "G-N0HC3Q4ETN"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
-
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
-const authi=getAuth(app);
+const authi = getAuth(app);
 
-
-const signup = async (email, password,name , phone) => {
+const signup = async (email, password, name, phone) => {
   const userC = await createUserWithEmailAndPassword(authi, email, password);
-  await updateProfile(userC.user,{displayName:name});
+  await updateProfile(userC.user, { displayName: name });
 
   await setDoc(doc(db, "users", userC.user.uid), {
     name: name,
     email: email,
-    phone: phone
+    phone: phone,
   });
-}
+};
 
 const login = (email, password) => {
   return signInWithEmailAndPassword(authi, email, password);
 };
 
-export { db, storage , authi ,login, signup};
+export { db, storage, authi, login, signup };
