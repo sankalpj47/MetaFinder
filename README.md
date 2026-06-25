@@ -65,7 +65,21 @@ npm install
 ```
 
 ### 3. Set up Firebase
-Create a `firebase.ts` (or `.js`) file in the project root with your Firebase config:
+
+Create a `.env` file in the project root with your Firebase config values:
+
+```env
+EXPO_PUBLIC_FIREBASE_API_KEY=your_api_key
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+EXPO_PUBLIC_FIREBASE_APP_ID=your_app_id
+```
+
+> ⚠️ Add `.env` to your `.gitignore` so it's never committed to a public repo.
+
+Then create a `firebase.ts` file in the project root that reads from these variables:
 
 ```ts
 import { initializeApp } from "firebase/app"
@@ -73,20 +87,18 @@ import { getFirestore } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
 }
 
 const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
 export const authi = getAuth(app)
 ```
-
->  Never commit real API keys to a public repo — use environment variables (`app.config.js` + `.env`) for production projects.
 
 If building for Android, also add your `google-services.json` file to the project root and reference it in `app.json`:
 
@@ -157,10 +169,6 @@ This moves the current starter code into `app-example/` and creates a blank `app
 ## Contributing
 
 Contributions, issues, and feature requests are welcome. Feel free to open a pull request or file an issue.
-
-## License
-
-This project is open source add your preferred license (MIT, Apache 2.0, etc.) here.
 
 ---
 
