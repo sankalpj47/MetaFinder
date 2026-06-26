@@ -36,7 +36,7 @@ Built with **React Native (Expo)** and **Firebase**.
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - **Framework:** [Expo](https://expo.dev) (React Native) with file-based routing (`expo-router`)
 - **Backend:** [Firebase](https://firebase.google.com/) (Firestore + Auth)
@@ -55,8 +55,8 @@ Built with **React Native (Expo)** and **Firebase**.
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/your-username/metafinder.git
-cd metafinder
+git clone https://github.com/sankalpj47/MetaFinder.git
+cd MetaFinder
 ```
 
 ### 2. Install dependencies
